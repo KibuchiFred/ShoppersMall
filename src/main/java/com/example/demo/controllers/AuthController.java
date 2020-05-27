@@ -14,26 +14,26 @@ import javax.validation.constraints.*;
 @Validated
 public class AuthController {
     @GetMapping("/emailValidator")
-    ResponseEntity<String> getEmail(@RequestParam("email") @NotBlank @Email(message = "provide a valid email address") @Min(value = 12, message = "email must be equal to or greater than 12")
-                                           @Max(value = 24, message = "email has to be less than or equal to 24") String email){
+    ResponseEntity<String> getEmail(@RequestParam("email") @NotBlank @Email(message = "provide a valid email address")
+                                    @Size(min = 12, max = 36, message = "the size must be between 12 and 36") String email){
         return ResponseEntity.ok("valid Email");
     }
 
     @PostMapping("/emailValidator")
-    ResponseEntity<String> postEmail(@RequestParam("email") @NotBlank @Email(message = "provide a valid email address")  @Min(value = 12, message = "email must be equal to or greater than 12")
-                                     @Max(value = 24, message = "email has to be less than or equal to 24") String email){
+    ResponseEntity<String> postEmail(@RequestParam("email") @NotBlank @Email(message = "provide a valid email address")
+                                             @Size(min = 12, max = 36, message = "the size must be between 12 and 36") String email){
         return ResponseEntity.ok("valid Email");
     }
 
     @GetMapping("/passwordValidator")
-    ResponseEntity<String> getPasword(@RequestParam("password") @NotBlank(message = "password can not be empty") @Min(value = 6, message = "password must be equal to or greater than 6")
-                                      @Max(value = 18, message = "password has to be less than or equal to 18")  String password){
+    ResponseEntity<String> getPasword(@RequestParam("password") @NotBlank(message = "password can not be empty")
+                                      @Size(min = 6, max = 12, message = "the size must be between 6 and 12") String password){
         return ResponseEntity.ok("valid Password");
     }
 
     @PostMapping("/passwordValidator")
-    ResponseEntity<String> postPasword(@RequestParam("password") @NotBlank(message = "password can not be empty") @Min(value = 6, message = "password must be equal to or greater than 6")
-                                       @Max(value = 18, message = "password has to be less than or equal to 18") String password){
+    ResponseEntity<String> postPasword(@RequestParam("password") @NotBlank(message = "password can not be empty")
+                                       @Size(min = 6, max = 12, message = "the size must be between 6 and 12") String password){
         return ResponseEntity.ok("valid Password");
     }
 
