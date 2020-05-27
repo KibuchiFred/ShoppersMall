@@ -29,3 +29,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Static content ###
+.static/
+/static/
+src/main/resources/static/
