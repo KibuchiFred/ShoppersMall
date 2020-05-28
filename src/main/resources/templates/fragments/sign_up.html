@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="blank_template/header">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<body >
+<div th:fragment="signUp">
+
+    <div id="wrapper">
+        <div class="form-container">
+            <span class="form-heading">Sign Up</span>
+            <form action="">
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="First Name" required>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Last Name" required>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Username" required>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" placeholder="Email" required>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Password" required>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Confirm Password" required>
+                    <span class="bar"></span>
+                </div>
+
+                <button type="submit" style="margin: 3rem;" class="btn btn-danger">Sign Up</button>
+
+                <div class="switch-login">
+                    <a href="">Already have an account?<span>Login</span></a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
