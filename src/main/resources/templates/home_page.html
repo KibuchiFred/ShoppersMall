@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="fragments/layout :: header">
     <meta charset="UTF-8">
+
     <title>Title</title>
 </head>
-<body>
-<div th:insert="fragments/footer :: footer"></div>
+<body th:replace="fragments/layout :: footer">
+
+<p class="bg">first thing</p>
+<p class="bg">second thing</p>
 </body>
 </html>
