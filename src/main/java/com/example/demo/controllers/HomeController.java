@@ -5,8 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping("/register")
     public String getHomePage(){
-        return "blank_template";
+        return "fragments/sign_up";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "fragments/sign_in";
     }
 }
