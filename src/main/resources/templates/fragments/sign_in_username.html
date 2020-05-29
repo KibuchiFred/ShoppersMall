@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{blank_template}" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body >
+<div layout:fragment="content">
+    <div id="wrapper">
+        <div class="form-container">
+            <span class="form-heading">Login</span>
+            <form th:action="@{login}" method="post">
+
+                <div class="input-group" layout:fragment="username">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Username" required>
+                    <span class="bar"></span>
+                </div>
+
+
+                        <button type="submit" style="margin: 3rem;" class="btn btn-danger">Next </button>
+
+                        <div class="switch-login">
+                            <a href="/register">Don't have an account?<span> Sign Up</span></a>
+                        </div> </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
