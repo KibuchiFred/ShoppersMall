@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{blank_template}" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+</head>
+
+<body >
+<div layout:fragment="content">
+    <div id="wrapper">
+        <div class="form-container">
+            <span class="form-heading">Sign Up</span>
+            <form th:action="@{/register}" th:object="${user}" method="post" >
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" th:field="*{us_fname}" placeholder="First Name"
+                           required/>
+                    <span class="bar"></span>
+<!--                    <label th:for="us_fname"  th:if="${#fields.hasErrors('us_fname')}" th:errors="*{us_fname}"  required="required"-->
+<!--                           class="btn btn-danger">-->
+<!--                    </label>-->
+
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Last Name" th:field="*{us_lname}"  required>
+                    <span class="bar"></span>
+<!--                    <label th:for="us_lname"  th:if="${#fields.hasErrors('us_lname')}" th:errors="*{us_lname}"  required="required"-->
+<!--                           class="btn btn-danger">-->
+<!--                    </label>-->
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" placeholder="Email Address" th:field="*{us_email}" required>
+                    <span class="bar"></span>
+
+<!--                    <label th:for="us_email"  th:if="${#fields.hasErrors('us_email')}" th:errors="*{us_email}"  required="required"-->
+<!--                           class="btn btn-danger">-->
+<!--                    </label>-->
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Username" th:field="*{us_username}" required>
+                    <span class="bar"></span>
+<!--                    <label th:for="us_username"  th:if="${#fields.hasErrors('us_username')}" th:errors="*{us_username}"  required="required"-->
+<!--                           class="btn btn-danger">-->
+<!--                    </label>-->
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-automobile"></i>
+
+                    <select class="form-control form-control-sm" id="roles" name="rn_role_name">
+
+                    <option th:each="role:${roles}"
+                            th:value="${role.id}"
+                            th:text="${role.getRn_role_name()}"
+                    >
+                    </option>
+                    </select>
+
+                    <span class="bar"></span>
+                </div>
+
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" placeholder="Password" th:field="*{us_password}" required>
+                    <span class="bar"></span>
+<!--                    <label th:for="us_password"  th:if="${#fields.hasErrors('us_password')}" th:errors="*{us_password}"  required="required"-->
+<!--                           class="btn btn-danger">-->
+<!--                    </label>-->
+                </div>
+
+                <button type="submit" style="margin: 3rem;" class="btn btn-danger">Sign Up</button>
+
+                <div class="switch-login">
+                    <a href="/login">Already have an account?<span> Login</span></a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
