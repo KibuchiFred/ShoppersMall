@@ -1,13 +1,17 @@
 package com.apple.models.shop;
 
+import com.apple.models.cms.Role;
+import com.apple.models.cms.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "sh_shops")
 public class Shop {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @NotBlank(message = "Shop name can not be left blank")

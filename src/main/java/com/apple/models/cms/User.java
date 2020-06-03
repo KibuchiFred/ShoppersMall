@@ -1,6 +1,8 @@
 package com.apple.models.cms;
 
 
+import com.apple.models.shop.Shop;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +14,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 @NotBlank
@@ -36,18 +38,6 @@ public class User {
     private Date updated_at;
     private int created_by;
     private int updated_by;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-private List<Role> roles;
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
 
     public Long getId() {
         return id;

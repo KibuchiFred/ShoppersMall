@@ -13,7 +13,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public void saveUser(User user){
-        user.setRoles(user.getRoles());
+       // user.setRoles(user.getRoles());
        // user.setCreated_by(user.getId());
         user.setUuid((UUID.randomUUID().toString()));
         user.setUs_enabled("N");

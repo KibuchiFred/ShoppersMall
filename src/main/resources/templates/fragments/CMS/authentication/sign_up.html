@@ -54,21 +54,6 @@
                 </div>
 
                 <div class="input-group">
-                    <i class="fa fa-automobile"></i>
-
-                    <select class="form-control form-control-sm" id="roles" name="roles">
-
-                    <option th:each="role:${roles}"
-                            th:value="${role.id}"
-                            th:text="${role.getRn_role_name()}">
-                    </option>
-                    </select>
-
-                    <span class="bar"></span>
-                </div>
-
-
-                <div class="input-group">
                     <i class="fa fa-lock"></i>
                     <input type="password" placeholder="Password" th:field="*{us_password}" required>
                     <span class="bar"></span>
