@@ -14,8 +14,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
 @NotBlank
     private String uuid;
@@ -36,14 +36,14 @@ public class User {
     private String us_enabled;
     private Date created_at;
     private Date updated_at;
-    private int created_by;
+    private String created_by;
     private int updated_by;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -119,11 +119,11 @@ public class User {
         this.updated_at = updated_at;
     }
 
-    public int getCreated_by() {
+    public String getCreated_by() {
         return created_by;
     }
 
-    public void setCreated_by(int created_by) {
+    public void setCreated_by(String created_by) {
         this.created_by = created_by;
     }
 

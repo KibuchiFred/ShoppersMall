@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "sh_shops")
 public class Shop {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Shop name can not be left blank")

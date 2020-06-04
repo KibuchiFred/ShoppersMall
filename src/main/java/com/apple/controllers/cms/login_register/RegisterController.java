@@ -26,7 +26,7 @@ public class RegisterController {
     private UserService userService;
 
     @GetMapping("/register")
-    public String getHomePage(Model model) {
+    public String getRegistrationPage(Model model) {
         model.addAttribute("user", new User());
         return "fragments/CMS/authentication/sign_up";
     }

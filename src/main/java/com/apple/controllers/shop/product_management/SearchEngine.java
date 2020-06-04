@@ -1,4 +1,4 @@
-package com.apple.controllers.shop.products;
+package com.apple.controllers.shop.product_management;
 
 import org.springframework.stereotype.Controller;
 
