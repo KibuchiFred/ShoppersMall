@@ -21,6 +21,7 @@ public class UserService {
         user.setId(0);
         user.setUuid((UUID.randomUUID().toString()));
         user.setUs_enabled("N");
-        user.setCreated_by(user.getUuid()); userRepository.save(user);
+        user.setCreated_by(user.getUuid());
+        userRepository.save(user);
     }
 }

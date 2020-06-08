@@ -6,6 +6,8 @@ import com.apple.models.shop.Shop;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,21 +19,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-@NotBlank
+    @NotBlank
     private String uuid;
-@NotBlank(message = "First name can not be empty")
+    @NotEmpty(message = "First name can not be empty")
     private String us_fname;
-@NotBlank(message = "Username can not be left empty")
+    @NotBlank(message = "Username can not be left empty")
     private String us_lname;
-@NotBlank(message = "Email field can not be empty")
-@Email
+    @NotBlank(message = "Email field can not be empty")
+    @Email
     private String us_email;
 
     @NotBlank(message = "Please fill in the first name")
     private String us_username;
 
-@NotBlank(message = "Please fill in the password.")
+    @NotBlank(message = "Please fill in the password.")
+    @Size(min = 6, max = 12, message = "password should be greater than 6")
     private String us_password;
+
+    @NotBlank(message = "Retype the password")
+    @Transient
+    private String us_confirm_password;
 
     private String us_enabled;
     private Date created_at;
@@ -93,6 +100,13 @@ public class User {
 
     public void setUs_password(String us_password) {
         this.us_password = us_password;
+    }
+    public String getUs_confirm_password() {
+        return us_confirm_password;
+    }
+
+    public void setUs_confirm_password(String us_confirm_password) {
+        this.us_confirm_password = us_confirm_password;
     }
 
     public String getUs_enabled() {
