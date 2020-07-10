@@ -20,8 +20,17 @@ public class UserService {
 
         user.setId(0);
         user.setUuid((UUID.randomUUID().toString()));
-        user.setUs_enabled("N");
-        user.setCreated_by(user.getUuid());
+        user.setUsEnabled("N");
+        user.setCreatedBy(user.getUuid());
         userRepository.save(user);
+    }
+
+    //this method finds a user by username from the database.
+    public User loadByUsername(String username){
+        User user = userRepository.findByUsUsername(username);
+        if (user == null)
+            System.out.print("The username was not found");
+
+        return user;
     }
 }

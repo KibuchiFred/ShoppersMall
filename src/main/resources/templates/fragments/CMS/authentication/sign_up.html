@@ -16,10 +16,10 @@
 
                 <div class="input-group">
                     <i class="fa fa-user"></i>
-                    <input type="text"  th:field="*{us_fname}" placeholder="First Name"
-                         required/>
+                    <input type="text" th:field="*{usFname}" placeholder="First Name"
+                           required/>
                     <span class="bar"></span>
-                    <label th:for="us_fname"  th:if="${#fields.hasErrors('us_fname')}" th:errors="*{us_fname}"  required="required"
+                    <label th:for="usFname" th:if="${#fields.hasErrors('usFname')}" th:errors="*{usFname}" required="required"
                            class="btn btn-danger">
                     </label>
 
@@ -27,46 +27,46 @@
 
                 <div class="input-group">
                     <i class="fa fa-user"></i>
-                    <input type="text" placeholder="Last Name" th:field="*{us_lname}"  required>
+                    <input type="text" placeholder="Last Name" th:field="*{usLname}" required>
                     <span class="bar"></span>
-                    <label th:for="us_lname"  th:if="${#fields.hasErrors('us_lname')}" th:errors="*{us_lname}"  required="required"
+                    <label th:for="usLname" th:if="${#fields.hasErrors('usLname')}" th:errors="*{usLname}" required="required"
                            class="btn btn-danger">
                     </label>
                 </div>
 
                 <div class="input-group">
                     <i class="fa fa-envelope"></i>
-                    <input type="email" placeholder="Email Address" th:field="*{us_email}" required>
+                    <input type="email" placeholder="Email Address" th:field="*{usEmail}" required>
                     <span class="bar"></span>
 
-                    <label th:for="us_email"  th:if="${#fields.hasErrors('us_email')}" th:errors="*{us_email}"  required="required"
+                    <label th:for="usEmail" th:if="${#fields.hasErrors('usEmail')}" th:errors="*{usEmail}" required="required"
                            class="btn btn-danger">
                     </label>
                 </div>
 
                 <div class="input-group">
                     <i class="fa fa-user"></i>
-                    <input type="text" placeholder="Username" th:field="*{us_username}" required>
+                    <input type="text" placeholder="Username" th:field="*{usUsername}" required>
                     <span class="bar"></span>
-                    <label th:for="us_username"  th:if="${#fields.hasErrors('us_username')}" th:errors="*{us_username}"  required="required"
+                    <label th:for="usUsername" th:if="${#fields.hasErrors('usUsername')}" th:errors="*{usUsername}" required="required"
                            class="btn btn-danger">
                     </label>
                 </div>
 
                 <div class="input-group">
                     <i class="fa fa-lock"></i>
-                    <input type="password" name="password" placeholder="Password" th:field="*{us_password}" required>
+                    <input type="password" name="password" placeholder="Password" th:field="*{usPassword}" required>
                     <span class="bar"></span>
-                    <label th:for="us_password"  th:if="${#fields.hasErrors('us_password')}" th:errors="*{us_password}"  required="required"
+                    <label th:for="usPassword" th:if="${#fields.hasErrors('usPassword')}" th:errors="*{usPassword}" required="required"
                            class="btn btn-danger">
                     </label>
                 </div>
 
                 <div class="input-group">
                     <i class="fa fa-lock"></i>
-                    <input type="password" name="confirmPassword" placeholder="Password" th:field="*{us_confirm_password}" required>
+                    <input type="password" name="confirmPassword" placeholder="Password" th:field="*{usConfirmPassword}" required>
                     <span class="bar"></span>
-                    <label th:for="us_confirm_password"  th:if="${#fields.hasErrors('us_password')}" th:errors="*{us_confirm_password}"  required="required"
+                    <label th:for="usConfirmPassword" th:if="${#fields.hasErrors('usPassword')}" th:errors="*{usConfirmPassword}" required="required"
                            class="btn btn-danger">
                     </label>
                 </div>

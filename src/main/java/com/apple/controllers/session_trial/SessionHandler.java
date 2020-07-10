@@ -2,9 +2,7 @@ package com.apple.controllers.session_trial;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+//@SessionAttributes("NOTES_SESSION")
 public class SessionHandler {
     @PostMapping("/addNote")
     public String addNote(@RequestParam("note") String note, HttpServletRequest httpRequest){
@@ -31,14 +30,17 @@ public class SessionHandler {
             notes.add(note);
             httpRequest.getSession().setAttribute("NOTES_SESSION",notes);
 
-            return "sessionHome";
+            return "redirect:/sessionHome";
     }
 
     @GetMapping("/sessionHome")
 
     public String sessionHome(Model model, HttpSession httpSession){
+
         List<String> notes = (List<String>) httpSession.getAttribute("NOTES_SESSION");
         model.addAttribute("notesSession", notes != null ? notes :new ArrayList<>());
+        model.addAttribute("sessionId", httpSession.getId());
+        System.out.println("Current session id" +httpSession.getId() +" "+ httpSession.getAttribute("NOTES_SESSION"));
         return "sessionHome";
 
     }

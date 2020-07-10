@@ -5,6 +5,8 @@ import com.apple.models.cms.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.List;
 public class Shop {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @NotBlank(message = "Shop name can not be left blank")
     private String sh_name;
@@ -29,16 +31,16 @@ public class Shop {
     @NotBlank
     private String uuid;
 
-    private String created_at;
-    private String updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private String created_by;
     private String updated_by;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -82,19 +84,19 @@ public class Shop {
         this.uuid = uuid;
     }
 
-    public String getCreated_at() {
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
 

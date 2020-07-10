@@ -19,8 +19,10 @@
 <div>
     <h2>Notes</h2>
     <ul>
-        <li th:each="notes : ${notesSession}"  th:text=${notes}></li>
+        <li th:each="notes : ${notesSession}"  th:text=${notes}>
+        </li>
     </ul>
+    <p th:text=" 'Current session id' + ${sessionId}"></p>
 </div>
 
 </body>

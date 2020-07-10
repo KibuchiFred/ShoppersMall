@@ -2,7 +2,7 @@ package com.apple.controllers.cms.login_register;
 
 import com.apple.models.cms.Role;
 import com.apple.models.cms.User;
-import com.apple.repositories.cms.RoleRepository;
+//import com.apple.repositories.cms.RoleRepository;
 import com.apple.services.cms.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,8 @@ import java.util.List;
 public class RegisterController {
 
 
-    @Autowired
-    private RoleRepository roleRepository;
+//    @Autowired
+//    private RoleRepository roleRepository;
     @Autowired
     private UserService userService;
 
@@ -31,16 +31,16 @@ public class RegisterController {
         return "fragments/CMS/authentication/sign_up";
     }
 
-    @ModelAttribute("roles")
-    public List<Role> roleSelector(){
-        List<Role> rolesFound = roleRepository.findAll();
-        return rolesFound;
-    }
+//    @ModelAttribute("roles")
+//    public List<Role> roleSelector(){
+//        List<Role> rolesFound = roleRepository.findAll();
+//        return rolesFound;
+//    }
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 
-        //User ifExists = userService.findByEmail(user.getUs_email());
+        //User ifExists = userService.findByEmail(user.getUsEmail());
         if (bindingResult.hasErrors()){
 
             return "fragments/CMS/authentication/sign_up";

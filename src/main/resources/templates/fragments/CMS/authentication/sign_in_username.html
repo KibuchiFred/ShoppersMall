@@ -13,11 +13,11 @@
     <div id="wrapper">
         <div class="form-container">
             <span class="form-heading">Login</span>
-            <form th:action="@{login}" method="post">
+            <form th:action="@{loginUsername}" th:object="${user}" method="post">
 
                 <div class="input-group" layout:fragment="username">
                     <i class="fa fa-user"></i>
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" th:field="*{usUsername}" placeholder="Username" required>
                     <span class="bar"></span>
                 </div>
 

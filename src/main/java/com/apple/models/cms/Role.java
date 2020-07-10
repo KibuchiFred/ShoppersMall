@@ -8,23 +8,24 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    private String rn_role_name;
+    @Column(name = "rnRoleName")
+    private String rnRoleName;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getRn_role_name() {
-        return rn_role_name;
+    public String getRnRoleName() {
+        return rnRoleName;
     }
 
-    public void setRn_role_name(String rn_role_name) {
-        this.rn_role_name = rn_role_name;
+    public void setRnRoleName(String rnRoleName) {
+        this.rnRoleName = rnRoleName;
     }
 }
