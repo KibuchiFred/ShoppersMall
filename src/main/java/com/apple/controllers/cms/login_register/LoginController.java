@@ -29,9 +29,16 @@ public class LoginController {
     //on post request get the username from the form and put it on the current session
     //then return the page containing password field
     @PostMapping("/loginUsername")
-    public String login(@ModelAttribute User user, HttpServletRequest httpSession) {
+    public String login(@ModelAttribute User user, HttpServletRequest httpSession) throws UsernameNotFoundException{
 
-        httpSession.getSession().setAttribute("username", user.getUsUsername());
+        //find user from the database using the username supplied by the user
+        User foundUser = userService.loadByUsername(user.getUsUsername());
+
+        //if username was not found, throw a username not found exception
+        if (foundUser == null) {
+            throw new UsernameNotFoundException("The user was not found");
+        }
+        httpSession.getSession().setAttribute("foundUser", foundUser);
         System.out.println("User passed: "+user.getUsUsername());
 
         return "fragments/CMS/authentication/sign_in_password";
@@ -39,24 +46,16 @@ public class LoginController {
 
     //on the login form when the post request is made
     @PostMapping(value = "/loginPassword")
-    public String loginPassword(@ModelAttribute User user, HttpSession session) throws UsernameNotFoundException {
+    public String loginPassword(@ModelAttribute User user, HttpSession session) {
 
         //fetch the username from the session
-        String username = (String) session.getAttribute("username");
+        User passedUser = (User) session.getAttribute("foundUser");
 
-        System.out.println("Check username was passed "+username);
+        System.out.println("Check user was passed "+passedUser);
         System.out.println("Check password was passed "+user.getUsPassword());
 
-        //find user from the database using the username supplied by the user
-        User foundUser = userService.loadByUsername(username);
-
-        //if username was not found, throw a username not found exception
-        if (foundUser == null) {
-            throw new UsernameNotFoundException("The user was not found");
-        }
-
         //else select password for this username from the database
-        String correctPassword = foundUser.getUsPassword();
+        String correctPassword = passedUser.getUsPassword();
 
         System.out.println("Password from database is: "+correctPassword);
 
