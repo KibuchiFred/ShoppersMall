@@ -4,10 +4,7 @@ package com.apple.models.cms;
 import com.apple.models.shop.Shop;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -21,9 +18,8 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
     private String uuid;
-    @NotEmpty(message = "First name can not be empty")
+    @NotBlank(message = "First name can not be empty")
     @Column(name = "usFname")
     private String usFname;
     @NotBlank(message = "Username can not be left empty")
@@ -36,14 +32,16 @@ public class User implements Serializable {
 
     @NotBlank(message = "Please fill in the first name")
     @Column(name = "usUsername")
+    @Size(min = 6, max = 20, message = "Username should be greater than 6")
     private String usUsername;
 
     @NotBlank(message = "Please fill in the password.")
-    @Size(min = 6, max = 12, message = "password should be greater than 6")
+    @Size(min = 6, max = 20, message = "password should be greater than 6")
     @Column(name = "us_password")
     private String usPassword;
 
     @NotBlank(message = "Retype the password")
+    @Size(min = 6, max = 20, message = "password should be greater than 6")
     @Transient
     private String usConfirmPassword;
 

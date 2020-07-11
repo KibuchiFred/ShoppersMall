@@ -32,17 +32,17 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
 
         //User ifExists = userService.findByEmail(user.getUsEmail());
         if (bindingResult.hasErrors()){
+            System.out.println("the system is getting here number one");
 
             return "fragments/CMS/authentication/sign_up";
         }
-        else {
+        System.out.println("the system is getting here");
+
             userService.saveUser(user);
-            redirectAttributes.addFlashAttribute("msg", "User registered successfully");
-            return "redirect:login";
-        }
+            return "fragments/CMS/authentication/sign_in_username";
     }
 }

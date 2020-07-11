@@ -48,7 +48,7 @@
                     <i class="fa fa-user"></i>
                     <input type="text" placeholder="Username" th:field="*{usUsername}" required>
                     <span class="bar"></span>
-                    <label th:for="usUsername" th:if="${#fields.hasErrors('usUsername')}" th:errors="*{usUsername}" required="required"
+                    <label th:for="usUsername" th:if="${#fields.hasErrors('usUsername')}" th:errors="*{usUsername}"
                            class="btn btn-danger">
                     </label>
                 </div>
