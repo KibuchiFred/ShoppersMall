@@ -42,3 +42,5 @@ src/main/java/com/apple/controllers/shop/
 src/main/java/com/apple/repositories/shop/
 src/main/java/com/apple/services/shop/
 src/main/java/com/apple/models/shop/
+src/main/resources/templates/shop_template.html
+src/main/resources/templates/fragments/Shop
