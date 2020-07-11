@@ -58,6 +58,7 @@ public class LoginController {
         String correctPassword = passedUser.getUsPassword();
 
         System.out.println("Password from database is: "+correctPassword);
+        session.setAttribute("username", passedUser.getUsUsername());
 
         //check if the password supplied is equal to the password from the db.
         //if equals method returns true, direct the user on the index page

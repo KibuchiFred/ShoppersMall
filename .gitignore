@@ -34,3 +34,11 @@ build/
 .static/
 /static/
 src/main/resources/static/
+
+###shop files ###
+.shop/
+/shop/
+src/main/java/com/apple/controllers/shop/
+src/main/java/com/apple/repositories/shop/
+src/main/java/com/apple/services/shop/
+src/main/java/com/apple/models/shop/

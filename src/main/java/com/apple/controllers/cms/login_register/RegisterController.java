@@ -31,12 +31,6 @@ public class RegisterController {
         return "fragments/CMS/authentication/sign_up";
     }
 
-//    @ModelAttribute("roles")
-//    public List<Role> roleSelector(){
-//        List<Role> rolesFound = roleRepository.findAll();
-//        return rolesFound;
-//    }
-
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, RedirectAttributes redirectAttributes){
 

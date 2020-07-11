@@ -7,15 +7,25 @@
     <title>Create Shop</title>
 </head>
 <body>
-    <div>
-        <form method="post" th:object="${shop}" th:action="@{/registerShop}">
+    <div layout:fragment="content">
+        <form method="post" th:object="${shop}" th:action="@{registerShop}">
             <div class="input-group">
-                <input type="text" placeholder="Enter shop name" th:field="sh_name" required>
+                <input type="text" placeholder="Enter shop name" th:field="*{sh_name}" required>
             </div>
 
-            <div class="input-group">
-                <input type="text" placeholder="Owner Email" th:field="createdBy" required>
-            </div>
+<!--            <div class="input-group">-->
+<!--                <input type="text" placeholder="Enter shop name" th:field="sh_name" required>-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <input type="text" placeholder="Enter shop name" th:field="sh_name" required>-->
+<!--            </div>-->
+
+<!--            <div class="input-group">-->
+<!--                <input type="text" placeholder="Enter shop name" th:field="sh_name" required>-->
+    <!--            </div>-->
+            <button type="submit" style="margin: 3rem;" class="btn btn-danger">Register Shop </button>
+
 
 
         </form>

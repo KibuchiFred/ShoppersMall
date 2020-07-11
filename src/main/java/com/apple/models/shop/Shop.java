@@ -1,13 +1,10 @@
 package com.apple.models.shop;
 
-import com.apple.models.cms.Role;
-import com.apple.models.cms.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sh_shops")
@@ -30,6 +27,8 @@ public class Shop {
 
     @NotBlank
     private String uuid;
+
+    private String sh_enabled;
 
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
@@ -83,6 +82,13 @@ public class Shop {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+    public String getSh_enabled() {
+        return sh_enabled;
+    }
+
+    public void setSh_enabled(String sh_enabled) {
+        this.sh_enabled = sh_enabled;
+    }
 
     public LocalDateTime getCreated_at() {
         return created_at;
@@ -114,5 +120,18 @@ public class Shop {
 
     public void setUpdated_by(String updated_by) {
         this.updated_by = updated_by;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Shop)) return false;
+        Shop shop = (Shop) o;
+        return getId() == shop.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

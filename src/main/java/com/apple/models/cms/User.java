@@ -1,6 +1,8 @@
 package com.apple.models.cms;
 
 
+import com.apple.models.shop.Shop;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "us_users")
@@ -53,6 +57,21 @@ public class User implements Serializable {
     private String createdBy;
     @Column(name = "updatedBy")
     private int updatedBy;
+
+    public Map<Shop, Role> getShopRoleMap() {
+        return shopRoleMap;
+    }
+
+    public void setShopRoleMap(Map<Shop, Role> shopRoleMap) {
+        this.shopRoleMap = shopRoleMap;
+    }
+
+    //mapping a user to a shop and role
+    @ManyToMany
+    @MapKeyJoinColumn(name = "shop_id")
+    @JoinTable(name = "user_shop_role",
+    joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Map<Shop,Role> shopRoleMap = new HashMap<>();
 
     public User(){}
 
