@@ -1,20 +1,21 @@
 package com.apple.controllers.cms.login_register;
 
-
 import com.apple.models.cms.User;
 import com.apple.services.cms.UserService;
-import com.apple.services.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {
+public class AuthController {
+
     //inject user service bean that has a method for finding user by username
     @Autowired
     UserService userService;
@@ -29,7 +30,7 @@ public class LoginController {
     //on post request get the username from the form and put it on the current session
     //then return the page containing password field
     @PostMapping("/loginUsername")
-    public String login(@ModelAttribute User user, HttpServletRequest httpSession) throws UsernameNotFoundException{
+    public String login(@ModelAttribute User user, HttpServletRequest httpSession) throws UsernameNotFoundException {
 
         //find user from the database using the username supplied by the user
         User foundUser = userService.loadByUsername(user.getUsUsername());
@@ -66,8 +67,18 @@ public class LoginController {
         if (correctPassword.equals(user.getUsPassword())){
             return "fragments/CMS/authentication/forgot_password.html";
         }else
-        return "fragments/CMS/authentication/sign_in_username";
+            return "fragments/CMS/authentication/sign_in_username";
 
+    }
+
+    @GetMapping("/forgot-password")
+    public String passwordReset() {
+        return "fragments/CMS/authentication/forgot_password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String resetPassword() {
+        return "fragments/CMS/authentication/sign_in_username";
     }
 
 }
