@@ -4,6 +4,7 @@ import com.apple.models.cms.User;
 import com.apple.services.cms.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +42,9 @@ public class AuthController {
             //return the user to the error page
             throw new UsernameNotFoundException("The user was not found");
         }
-        httpSession.getSession().setAttribute("foundUser", foundUser);
-        System.out.println("User passed: "+user.getUsUsername());
+
+        httpSession.getSession().setAttribute("dbPassword", foundUser.getUsPassword());
+        System.out.println("User passed db password: "+ foundUser.getUsPassword());
 
         return "fragments/CMS/authentication/sign_in_password";
     }
@@ -51,22 +53,18 @@ public class AuthController {
     @PostMapping(value = "/loginPassword")
     public String loginPassword(@ModelAttribute User user, HttpSession session) {
 
-        //fetch the username from the session
-        User passedUser = (User) session.getAttribute("foundUser");
-
-        System.out.println("Check user was passed "+passedUser);
-        System.out.println("Check password was passed "+user.getUsPassword());
-
-        //else select password for this username from the database
-        String correctPassword = passedUser.getUsPassword();
+        //select password for this username from the database
+        String correctPassword = (String) session.getAttribute("dbPassword");
+        //hash login passed from the view to get the same hash
+        String userPassedPassword = new BCryptPasswordEncoder().encode(user.getUsPassword());
 
         System.out.println("Password from database is: "+correctPassword);
-        session.setAttribute("username", passedUser.getUsUsername());
 
         //check if the password supplied is equal to the password from the db.
         //if equals method returns true, direct the user on the index page
         //if equals method returns false, return user to username field to supply correct details.
-        if (correctPassword.equals(user.getUsPassword())){
+        System.out.println("Check results for password comparison: "+correctPassword.equals(userPassedPassword));
+        if (correctPassword.equals(userPassedPassword)){
             System.out.println("Password is correct");
             return "fragments/CMS/authentication/forgot_password.html";
         }

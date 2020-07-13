@@ -2,6 +2,7 @@ package com.apple.models.cms;
 
 
 import com.apple.models.shop.Shop;
+import com.apple.validators.ValidEmail;
 import com.apple.validators.ValidPassword;
 
 import javax.persistence.*;
@@ -27,7 +28,8 @@ public class User implements Serializable {
     @Column(name = "us_lname")
     private String usLname;
     @NotBlank(message = "Email field can not be empty")
-    @Email
+    //@Email
+    @ValidEmail
     @Column(name = "usEmail")
     private String usEmail;
 

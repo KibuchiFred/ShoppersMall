@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,17 +33,30 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
+    public ModelAndView registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,
+                                     ModelAndView modelAndView){
 
-        //User ifExists = userService.findByEmail(user.getUsEmail());
+        User ifExists = userService.findByEmail(user.getUsEmail());
+        System.out.print("User check: "+ifExists);
+
         if (bindingResult.hasErrors()){
             System.out.println("the system is getting here number one");
 
-            return "fragments/CMS/authentication/sign_up";
+            modelAndView.setViewName("fragments/CMS/authentication/sign_up");
+
         }
-        System.out.println("the system is getting here");
+        else if (ifExists != null){
+            System.out.println("A user with that email was found.");
+            modelAndView.addObject("message","The email already exists");
+            modelAndView.setViewName("fragments/CMS/authentication/sign_up");
+            bindingResult.reject("usEmail");
+        }else {
 
             userService.saveUser(user);
-            return "fragments/CMS/authentication/sign_in_username";
+            modelAndView.setViewName("fragments/CMS/authentication/sign_in_username");
+        }
+
+            return modelAndView;
     }
+
 }

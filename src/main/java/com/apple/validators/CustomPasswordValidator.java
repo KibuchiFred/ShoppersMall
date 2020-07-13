@@ -19,7 +19,7 @@ public class CustomPasswordValidator implements ConstraintValidator<ValidPasswor
 
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 // at least 8 characters
-                new LengthRule(6, 20),
+                new LengthRule(6, 60),
 
                 // at least one upper-case character
                 new CharacterRule(EnglishCharacterData.UpperCase, 1),
