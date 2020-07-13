@@ -2,6 +2,7 @@ package com.apple.models.cms;
 
 
 import com.apple.models.shop.Shop;
+import com.apple.validators.ValidPassword;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -35,13 +36,12 @@ public class User implements Serializable {
     @Size(min = 6, max = 20, message = "Username should be greater than 6")
     private String usUsername;
 
-    @NotBlank(message = "Please fill in the password.")
-    @Size(min = 6, max = 20, message = "password should be greater than 6")
-    @Column(name = "us_password")
+//    @NotBlank(message = "Please fill in the password.")
+//    @Size(min = 6, max = 20, message = "password should be greater than 6")
+//    @Column(name = "us_password")
+    @ValidPassword
     private String usPassword;
 
-    @NotBlank(message = "Retype the password")
-    @Size(min = 6, max = 20, message = "password should be greater than 6")
     @Transient
     private String usConfirmPassword;
 

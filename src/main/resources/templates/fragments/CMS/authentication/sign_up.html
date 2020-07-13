@@ -59,10 +59,14 @@
                     <i class="fa fa-lock"></i>
                     <input type="password" name="password" placeholder="Password" id="userPassword" th:field="*{usPassword}" required>
                     <span class="bar"></span>
-                    <label th:for="usPassword" th:if="${#fields.hasErrors('usPassword')}" th:errors="*{usPassword}" required="required"
-                           class="btn btn-danger">
-                    </label>
+
                 </div>
+                <div>
+                    <span th:if="${#fields.hasErrors('usPassword')}" th:errors="*{usPassword}" required="required"
+                              class="text-danger"></span>
+                </div>
+
+
 
                 <div class="input-group">
                     <i class="fa fa-lock"></i>
