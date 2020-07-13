@@ -37,6 +37,8 @@ public class AuthController {
 
         //if username was not found, throw a username not found exception
         if (foundUser == null) {
+            //to do:- create an @Exception handler to throw the exception and
+            //return the user to the error page
             throw new UsernameNotFoundException("The user was not found");
         }
         httpSession.getSession().setAttribute("foundUser", foundUser);
@@ -65,8 +67,11 @@ public class AuthController {
         //if equals method returns true, direct the user on the index page
         //if equals method returns false, return user to username field to supply correct details.
         if (correctPassword.equals(user.getUsPassword())){
+            System.out.println("Password is correct");
             return "fragments/CMS/authentication/forgot_password.html";
-        }else
+        }
+
+            System.out.println("The password is  not correct..");
             return "fragments/CMS/authentication/sign_in_username";
 
     }

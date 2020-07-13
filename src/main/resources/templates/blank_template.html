@@ -16,8 +16,6 @@
     <link rel="stylesheet" th:href="@{/font-awesome/css/solid.min.css}" >
     <link rel="stylesheet" th:href="@{/font-awesome/css/regular.min.css}" >
 
-    <script th:src="@{/jquery-3.5.1.min.js}" ></script>
-
 </head>
 <body layout:fragment="body">
 <div layout:fragment="navigatioHeader">
@@ -29,6 +27,41 @@
 
 
 <div layout:fragment="footer"> Footer</div>
+<script type="text/javascript" th:src="@{/jquery-3.5.1.min.js}" ></script>
+
+<script type="application/javascript">
+
+    $(document).ready(function () {
+        function passwordComparator() {
+            var password = $("#userPassword").val();
+            var password2 = $("#userConfirmPassword").val();
+
+            if (password != password2){
+                return "Passwords do not match";
+            }
+
+        }
+
+        $(document).on("keyup" , "#userConfirmPassword" , function () {
+            var error = passwordComparator();
+            if(error != null){
+                //selector
+                $("#passwordMismatch").text(error);
+                $("#submitButton").prop("disabled", true);
+
+            }else {
+                $("#submitButton").prop("disabled", false);
+                $("#passwordMismatch").empty();
+            }
+
+
+
+
+
+        })
+    });
+
+</script>
 
 </body>
 </html>

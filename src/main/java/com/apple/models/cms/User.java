@@ -30,7 +30,7 @@ public class User implements Serializable {
     @Column(name = "usEmail")
     private String usEmail;
 
-    @NotBlank(message = "Please fill in the first name")
+    @NotBlank(message = "Please fill in the user name")
     @Column(name = "usUsername")
     @Size(min = 6, max = 20, message = "Username should be greater than 6")
     private String usUsername;
