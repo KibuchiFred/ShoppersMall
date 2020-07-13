@@ -56,15 +56,16 @@ public class AuthController {
         //select password for this username from the database
         String correctPassword = (String) session.getAttribute("dbPassword");
         //hash login passed from the view to get the same hash
-        String userPassedPassword = new BCryptPasswordEncoder().encode(user.getUsPassword());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         System.out.println("Password from database is: "+correctPassword);
+        boolean result = bCryptPasswordEncoder.matches(user.getUsPassword(), correctPassword);
 
         //check if the password supplied is equal to the password from the db.
         //if equals method returns true, direct the user on the index page
         //if equals method returns false, return user to username field to supply correct details.
-        System.out.println("Check results for password comparison: "+correctPassword.equals(userPassedPassword));
-        if (correctPassword.equals(userPassedPassword)){
+       // System.out.println("Check results for password comparison: "+correctPassword.equals(userPassedPassword));
+        if (result == true){
             System.out.println("Password is correct");
             return "fragments/CMS/authentication/forgot_password.html";
         }
