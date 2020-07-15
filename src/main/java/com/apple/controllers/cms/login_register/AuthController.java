@@ -43,7 +43,10 @@ public class AuthController {
             throw new UsernameNotFoundException("The user was not found");
         }
 
-        httpSession.getSession().setAttribute("dbPassword", foundUser.getUsPassword());
+        HttpSession session = httpSession.getSession();
+        session.setAttribute("dbPassword", foundUser.getUsPassword());
+        session.setAttribute("userName", user.getUsUsername());
+
         System.out.println("User passed db password: "+ foundUser.getUsPassword());
 
         return "fragments/CMS/authentication/sign_in_password";
@@ -51,7 +54,7 @@ public class AuthController {
 
     //on the login form when the post request is made
     @PostMapping(value = "/loginPassword")
-    public String loginPassword(@ModelAttribute User user, HttpSession session) {
+    public String loginPassword(@ModelAttribute User user, HttpSession session, Model model) {
 
         //select password for this username from the database
         String correctPassword = (String) session.getAttribute("dbPassword");
@@ -70,18 +73,34 @@ public class AuthController {
             return "fragments/CMS/authentication/forgot_password.html";
         }
 
+        model.addAttribute("error", "Username and password don't match");
             System.out.println("The password is  not correct..");
             return "fragments/CMS/authentication/sign_in_username";
 
     }
 
     @GetMapping("/forgot-password")
-    public String passwordReset() {
+    public String passwordReset(@ModelAttribute("user") User user) {
         return "fragments/CMS/authentication/forgot_password";
     }
 
     @PostMapping("/forgot-password")
-    public String resetPassword() {
+    public String resetPassword(@ModelAttribute("user") User user, HttpSession httpSession, Model model) {
+        String username = (String) httpSession.getAttribute("userName");
+
+        User foundUser = userService.loadByUsername(username);
+
+        //if username was not found, throw a username not found exception
+        if (foundUser == null) {
+            System.out.println("User was not found....");
+
+            model.addAttribute("message", "Something went wrong!");
+            return "fragments/CMS/authentication/sign_in_username";
+        }
+        //model.addAttribute(foundUser);
+
+        userService.updatePassword(user.getUsPassword(), username);
+
         return "fragments/CMS/authentication/sign_in_username";
     }
 

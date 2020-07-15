@@ -40,4 +40,11 @@ public class UserService {
     public User findByEmail(String usEmail) {
         return userRepository.findByUsEmail(usEmail);
     }
+
+    @Transactional
+    public void updatePassword(String password, String username){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        userRepository.updatePassword(bCryptPasswordEncoder.encode(password),username);
+    }
 }

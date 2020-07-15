@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,19 +38,18 @@ public class RegisterController {
                                      ModelAndView modelAndView){
 
         User ifExists = userService.findByEmail(user.getUsEmail());
-        System.out.print("User check: "+ifExists);
 
         if (bindingResult.hasErrors()){
-            System.out.println("the system is getting here number one");
 
             modelAndView.setViewName("fragments/CMS/authentication/sign_up");
 
         }
         else if (ifExists != null){
-            System.out.println("A user with that email was found.");
-            modelAndView.addObject("message","The email already exists");
-            modelAndView.setViewName("fragments/CMS/authentication/sign_up");
+            System.out.println(" \n A user with that email was found.");
+            modelAndView.addObject("message","User with that email already exists");
             bindingResult.reject("usEmail");
+            modelAndView.setViewName("fragments/CMS/authentication/sign_up");
+
         }else {
 
             userService.saveUser(user);

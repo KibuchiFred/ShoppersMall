@@ -30,7 +30,7 @@ public class User implements Serializable {
     @NotBlank(message = "Email field can not be empty")
     //@Email
     @ValidEmail
-    @Column(name = "usEmail")
+    @Column(name = "usEmail", unique = true)
     private String usEmail;
 
     @NotBlank(message = "Please fill in the user name")

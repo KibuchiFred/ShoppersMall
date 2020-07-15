@@ -20,6 +20,13 @@
                     <input type="text" th:field="*{usUsername}" placeholder="Username" required>
                     <span class="bar"></span>
                 </div>
+                <div>
+                    <span class="text-danger" th:text="${error}"></span>
+                </div>
+
+                <div>
+                    <span class="text-danger" th:text="${message}"></span>
+                </div>
 
 
                         <button type="submit" style="margin: 3rem;" class="btn btn-danger">Next </button>
