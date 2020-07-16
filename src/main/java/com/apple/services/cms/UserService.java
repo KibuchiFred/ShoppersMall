@@ -16,11 +16,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    public String passwordEncoder(String password){
+       return  bCryptPasswordEncoder.encode(password);
+    }
+
     @Transactional(isolation=Isolation.SERIALIZABLE)
     public void saveUser(User user) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        user.setUsPassword( bCryptPasswordEncoder.encode(user.getUsPassword()));
+
+        user.setUsPassword(passwordEncoder(user.getUsPassword()));
         user.setId(0);
         user.setUuid((UUID.randomUUID().toString()));
         user.setUsEnabled("N");
@@ -36,6 +42,10 @@ public class UserService {
 
         return user;
     }
+    //A method to find a check if password matches.
+    public boolean passwordMatcher(String passOne, String passTwo){
+        return bCryptPasswordEncoder.matches(passOne, passTwo);
+    }
 
     public User findByEmail(String usEmail) {
         return userRepository.findByUsEmail(usEmail);
@@ -43,8 +53,7 @@ public class UserService {
 
     @Transactional
     public void updatePassword(String password, String email){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        userRepository.updatePassword(bCryptPasswordEncoder.encode(password),email);
+        userRepository.updatePassword(passwordEncoder(password),email);
     }
 }
