@@ -42,9 +42,9 @@ public class UserService {
     }
 
     @Transactional
-    public void updatePassword(String password, String username){
+    public void updatePassword(String password, String email){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        userRepository.updatePassword(bCryptPasswordEncoder.encode(password),username);
+        userRepository.updatePassword(bCryptPasswordEncoder.encode(password),email);
     }
 }

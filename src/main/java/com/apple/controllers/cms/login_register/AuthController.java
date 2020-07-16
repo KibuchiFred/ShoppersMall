@@ -1,15 +1,16 @@
 package com.apple.controllers.cms.login_register;
 
+import com.apple.models.cms.ConfirmationToken;
 import com.apple.models.cms.User;
+import com.apple.repositories.cms.ConfirmationTokenReposiroty;
+import com.apple.services.cms.TokenService;
 import com.apple.services.cms.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,12 @@ public class AuthController {
     //inject user service bean that has a method for finding user by username
     @Autowired
     UserService userService;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    ConfirmationTokenReposiroty confirmationTokenReposiroty;
 
     //get the login page with username field.
     @GetMapping("/loginForm")
@@ -46,6 +53,7 @@ public class AuthController {
         HttpSession session = httpSession.getSession();
         session.setAttribute("dbPassword", foundUser.getUsPassword());
         session.setAttribute("userName", user.getUsUsername());
+        session.setAttribute("userEmail", foundUser.getUsEmail());
 
         System.out.println("User passed db password: "+ foundUser.getUsPassword());
 
@@ -78,30 +86,49 @@ public class AuthController {
             return "fragments/CMS/authentication/sign_in_username";
 
     }
-
+//get the forget password page
     @GetMapping("/forgot-password")
     public String passwordReset(@ModelAttribute("user") User user) {
         return "fragments/CMS/authentication/forgot_password";
     }
-
+//user inputs email and a link is sent with user token appended at the end
     @PostMapping("/forgot-password")
-    public String resetPassword(@ModelAttribute("user") User user, HttpSession httpSession, Model model) {
-        String username = (String) httpSession.getAttribute("userName");
+    public String sendResetLink(@ModelAttribute("user") User user, Model model){
 
-        User foundUser = userService.loadByUsername(username);
+        User dbUser = userService.findByEmail(user.getUsEmail());
+        if (dbUser != null ) {
+            model.addAttribute("success","Check your email for the password reset link");
+            tokenService.createToken(dbUser);
+            return "fragments/CMS/authentication/sign_in_username";
+        }
 
-        //if username was not found, throw a username not found exception
-        if (foundUser == null) {
+        return "error";
+
+    }
+
+    @GetMapping("/confirm-reset")
+    public String resetPassword(Model model,@ModelAttribute("user") User user,
+                                @RequestParam("token") String confirmationToken) {
+        ConfirmationToken token = confirmationTokenReposiroty.findConfirmationTokenByConfirmationToken(confirmationToken);
+
+        //get user from token table and fetch email to update password
+        if (token == null) {
             System.out.println("User was not found....");
 
             model.addAttribute("message", "Something went wrong!");
-            return "fragments/CMS/authentication/sign_in_username";
+            return "The link is broken";
         }
-        //model.addAttribute(foundUser);
+            return "fragments/CMS/authentication/new_password";
 
-        userService.updatePassword(user.getUsPassword(), username);
+        }
 
+        @PostMapping("/update-password")
+        public String updatePassword(@ModelAttribute("user") User user, HttpSession httpSession){
+        String email = (String) httpSession.getAttribute("userEmail");
+        userService.updatePassword(user.getUsPassword(),email );
         return "fragments/CMS/authentication/sign_in_username";
+        }
+
     }
 
-}
+

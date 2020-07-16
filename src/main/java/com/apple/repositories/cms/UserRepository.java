@@ -14,7 +14,7 @@ public interface UserRepository  extends JpaRepository<User,Integer> {
      User findByUsEmail(String email);
 
      @Modifying
-     @Query("update User u set u.usPassword =?1 where u.usUsername =?2")
-     void updatePassword(String password, String username);
+     @Query("update User u set u.usPassword =?1 where u.usEmail =?2")
+     void updatePassword(String password, String userEmail);
 
 }
