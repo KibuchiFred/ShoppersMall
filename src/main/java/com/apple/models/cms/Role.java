@@ -8,9 +8,10 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int id;
 
-    @Column(name = "roleName")
+    @Column(name = "rn_role_name")
     private String roleName;
 
     public int getId() {

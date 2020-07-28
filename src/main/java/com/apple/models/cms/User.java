@@ -9,8 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name = "us_users")
@@ -18,8 +17,10 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private int id;
 
+    @Basic(fetch = FetchType.LAZY, optional = false)
     private String uuid;
     @NotBlank(message = "First name can not be empty")
     @Column(name = "usFname")
@@ -31,16 +32,19 @@ public class User implements Serializable {
     //@Email
     @ValidEmail
     @Column(name = "usEmail", unique = true)
+    @Basic(fetch = FetchType.LAZY, optional = false)
     private String usEmail;
 
     @NotBlank(message = "Please fill in the user name")
     @Column(name = "usUsername")
     @Size(min = 6, max = 20, message = "Username should be greater than 6")
+    @Basic(fetch = FetchType.LAZY, optional = false)
     private String usUsername;
 
 //    @NotBlank(message = "Please fill in the password.")
 //    @Size(min = 6, max = 20, message = "password should be greater than 6")
 //    @Column(name = "us_password")
+    @Basic(fetch = FetchType.LAZY, optional = false)
     @ValidPassword
     private String usPassword;
 
@@ -58,6 +62,12 @@ public class User implements Serializable {
     @Column(name = "updatedBy")
     private int updatedBy;
 
+    @ManyToMany
+    @MapKeyJoinColumn(name = "shop_fk")
+    @JoinTable(name = "user_shop_role",
+            joinColumns = @JoinColumn(name = "user_fk"), inverseJoinColumns = @JoinColumn(name = "role_fk"))
+    private Map<Shop, Role> shopRoleMap = new HashMap<>();
+
     public Map<Shop, Role> getShopRoleMap() {
         return shopRoleMap;
     }
@@ -65,13 +75,6 @@ public class User implements Serializable {
     public void setShopRoleMap(Map<Shop, Role> shopRoleMap) {
         this.shopRoleMap = shopRoleMap;
     }
-
-    //mapping a user to a shop and role
-    @ManyToMany
-    @MapKeyJoinColumn(name = "shop_id")
-    @JoinTable(name = "user_shop_role",
-    joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Map<Shop,Role> shopRoleMap = new HashMap<>();
 
     public User(){}
 

@@ -3,6 +3,7 @@ package com.apple.controllers.cms.login_register;
 import com.apple.models.cms.ConfirmationToken;
 import com.apple.models.cms.User;
 import com.apple.repositories.cms.ConfirmationTokenReposiroty;
+import com.apple.services.cms.RoleService;
 import com.apple.services.cms.TokenService;
 import com.apple.services.cms.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,7 +43,7 @@ public class AuthController {
     public String login(@ModelAttribute User user, HttpServletRequest httpSession) throws UsernameNotFoundException {
 
         //find user from the database using the username supplied by the user
-        User foundUser = userService.loadByUsername(user.getUsUsername());
+        User foundUser = userService.findByEmail(user.getUsEmail());
 
         //if username was not found, throw a username not found exception
         if (foundUser == null) {
@@ -52,7 +54,7 @@ public class AuthController {
 
         HttpSession session = httpSession.getSession();
         session.setAttribute("dbPassword", foundUser.getUsPassword());
-        session.setAttribute("userName", user.getUsUsername());
+       // session.setAttribute("userName", user.getUsUsername());
         session.setAttribute("userEmail", foundUser.getUsEmail());
 
         System.out.println("User passed db password: "+ foundUser.getUsPassword());
@@ -61,8 +63,11 @@ public class AuthController {
     }
 
     //on the login form when the post request is made
+    @Autowired
+    private RoleService roleService;
     @PostMapping(value = "/loginPassword")
-    public String loginPassword(@ModelAttribute User user, HttpSession session, Model model) {
+    public ModelAndView loginPassword(@ModelAttribute User user, HttpSession session,
+                                      ModelAndView modelAndView) {
 
         //select password for this username from the database
         String correctPassword = (String) session.getAttribute("dbPassword");
@@ -72,12 +77,14 @@ public class AuthController {
 
          if (result == true){
             System.out.println("Password is correct");
-            return "fragments/CMS/authentication/forgot_password.html";
+            modelAndView.setViewName("fragments/CMS/authentication/forgot_password.html");
+            return modelAndView;
         }
 
-        model.addAttribute("error", "Username and password don't match");
-            System.out.println("The password is  not correct..");
-            return "fragments/CMS/authentication/sign_in_username";
+         modelAndView.addObject("error", "Email and password don't match");
+         System.out.println("The password is  not correct..");
+         modelAndView.setViewName("fragments/CMS/authentication/sign_in_username");
+         return modelAndView;
 
     }
 //get the forget password page
@@ -100,9 +107,9 @@ public class AuthController {
 
     }
 
-    @GetMapping("/confirm-reset")
+    @GetMapping("/confirm-reset/{token}")
     public String resetPassword(Model model,@ModelAttribute("user") User user,
-                                @RequestParam("token") String confirmationToken) {
+                                @PathVariable("token") String confirmationToken) {
         ConfirmationToken token = confirmationTokenReposiroty.findConfirmationTokenByConfirmationToken(confirmationToken);
 
         //get user from token table and fetch email to update password

@@ -48,7 +48,11 @@ public class UserService {
     }
 
     public User findByEmail(String usEmail) {
-        return userRepository.findByUsEmail(usEmail);
+        User user = userRepository.findByUsEmail(usEmail);
+        if (user == null)
+            System.out.print("User with that email does not exist"+ usEmail);
+
+        return user;
     }
 
     @Transactional
