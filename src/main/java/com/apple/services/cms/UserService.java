@@ -1,20 +1,26 @@
 package com.apple.services.cms;
 
+import com.apple.models.cms.Role;
 import com.apple.models.cms.User;
+import com.apple.models.shop.Shop;
 import com.apple.repositories.cms.UserRepository;
+import com.apple.services.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ShopService shopService;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -59,5 +65,18 @@ public class UserService {
     public void updatePassword(String password, String email){
 
         userRepository.updatePassword(passwordEncoder(password),email);
+    }
+
+    public Shop getMyShops(String email){
+        Map<Shop, Role> shopRole = userRepository.findbyUserEmail(email);
+        Shop shop = new Shop();
+        for (Map.Entry<Shop, Role> entry : shopRole.entrySet())
+        {
+            shop = entry.getKey();
+            System.out.println("Shop is: "+shop);
+            Role role = entry.getValue();
+            System.out.println("The role value is: "+role.getRoleName());
+        }
+        return shop;
     }
 }

@@ -62,7 +62,8 @@ public class User implements Serializable {
     @Column(name = "updatedBy")
     private int updatedBy;
 
-    @ManyToMany
+    //mapping
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @MapKeyJoinColumn(name = "shop_fk")
     @JoinTable(name = "user_shop_role",
             joinColumns = @JoinColumn(name = "user_fk"), inverseJoinColumns = @JoinColumn(name = "role_fk"))
