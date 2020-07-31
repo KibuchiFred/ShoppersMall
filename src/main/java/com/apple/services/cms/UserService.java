@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -42,11 +45,11 @@ public class UserService {
 
     //this method finds a user by username from the database.
     public User loadByUsername(String username){
-        User user = userRepository.findByUsUsername(username);
+        Optional<User> user = userRepository.findByUsUsername(username);
         if (user == null)
             System.out.print("The username was not found");
 
-        return user;
+        return user.get();
     }
     //A method to find a check if password matches.
     public boolean passwordMatcher(String passOne, String passTwo){
@@ -54,11 +57,11 @@ public class UserService {
     }
 
     public User findByEmail(String usEmail) {
-        User user = userRepository.findByUsEmail(usEmail);
+        Optional<User> user = userRepository.findByUsEmail(usEmail);
         if (user == null)
             System.out.print("User with that email does not exist"+ usEmail);
 
-        return user;
+        return user.get();
     }
 
     @Transactional
@@ -67,16 +70,41 @@ public class UserService {
         userRepository.updatePassword(passwordEncoder(password),email);
     }
 
-    public Shop getMyShops(String email){
-        Map<Shop, Role> shopRole = userRepository.findbyUserEmail(email);
-        Shop shop = new Shop();
-        for (Map.Entry<Shop, Role> entry : shopRole.entrySet())
-        {
-            shop = entry.getKey();
-            System.out.println("Shop is: "+shop);
-            Role role = entry.getValue();
-            System.out.println("The role value is: "+role.getRoleName());
-        }
-        return shop;
+//    public void getMyShops(String email){
+//        List<Map<Shop,Role>> shopRole= userRepository.findByUserEmail(email);
+//
+//        Map<Shop,Role> result = new HashMap<>();
+//        shopRole.forEach(shopRoleMap -> {
+//            result.putAll(shopRoleMap.entrySet().stream().collect(Collectors.toMap(
+//                    entry -> entry.getKey(), entry-> (Role) entry.getValue()
+//            )));
+//        });
+//
+//        System.out.println("Result is: "+result);
+//
+//        for (Map.Entry<Shop,Role> found : result.entrySet()){
+//            Shop shop = found.getKey();
+//            Role role = found.getValue();
+//            System.out.println("Shop found is: "+shop);
+//            System.out.println("Role found  is: "+role);
+//        }
+////        for (Map<Shop,Role> map : shopRole){
+////            for (Map.Entry<Shop,Role> result : map.entrySet()){
+////                System.out.println("The key is: "+result.getKey());
+////                System.out.println("And the value is: "+result.getValue());
+////            }
+////        }
+//        }
+
+    @Transactional
+    public List<Object[]> findShopAndRoleByUserEmail(String email){
+        return userRepository.findShopAndRoleByUserEmail(email);
     }
-}
+
+    @Transactional
+    public Map<Shop, Role> getMyShops(String email){
+        return userRepository.findByUsEmail(email)
+                .map(User::getShopRoleMap)
+                .orElse(new HashMap<>());
+    }
+    }

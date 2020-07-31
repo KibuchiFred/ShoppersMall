@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -67,7 +68,7 @@ public class AuthController {
     private RoleService roleService;
     @PostMapping(value = "/loginPassword")
     public ModelAndView loginPassword(@ModelAttribute User user, HttpSession session,
-                                      ModelAndView modelAndView) {
+                                      ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
 
         //select password for this username from the database
         String correctPassword = (String) session.getAttribute("dbPassword");
@@ -77,7 +78,8 @@ public class AuthController {
 
          if (result == true){
             System.out.println("Password is correct");
-            modelAndView.setViewName("fragments/CMS/authentication/forgot_password.html");
+            redirectAttributes.addFlashAttribute("message", "Logged In Successfully");
+            modelAndView.setViewName("redirect:/my-shops");
             return modelAndView;
         }
 

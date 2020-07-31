@@ -60,14 +60,31 @@ public class User implements Serializable {
     @Column(name = "createdBy")
     private String createdBy;
     @Column(name = "updatedBy")
-    private int updatedBy;
+    private String updatedBy;
 
     //mapping
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @MapKeyJoinColumn(name = "shop_fk")
     @JoinTable(name = "user_shop_role",
             joinColumns = @JoinColumn(name = "user_fk"), inverseJoinColumns = @JoinColumn(name = "role_fk"))
+    @MapKeyJoinColumn(name = "shop_fk")
     private Map<Shop, Role> shopRoleMap = new HashMap<>();
+
+    public User(String uuid, @NotBlank(message = "First name can not be empty") String usFname, @NotBlank(message = "Username can not be left empty") String usLname, @NotBlank(message = "Email field can not be empty") String usEmail, @NotBlank(message = "Please fill in the user name") @Size(min = 6, max = 20, message = "Username should be greater than 6") String usUsername, String usPassword, String usConfirmPassword, String usEnabled, LocalDateTime createdAt,
+                LocalDateTime updatedAt, String createdBy, String updatedBy, Map<Shop, Role> shopRoleMap) {
+        this.uuid = uuid;
+        this.usFname = usFname;
+        this.usLname = usLname;
+        this.usEmail = usEmail;
+        this.usUsername = usUsername;
+        this.usPassword = usPassword;
+        this.usConfirmPassword = usConfirmPassword;
+        this.usEnabled = usEnabled;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+        this.shopRoleMap = shopRoleMap;
+    }
 
     public Map<Shop, Role> getShopRoleMap() {
         return shopRoleMap;
@@ -174,12 +191,37 @@ public class User implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public int getUpdatedBy() {
+    public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(int updatedBy) {
+    public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() &&
+                getUuid().equals(user.getUuid()) &&
+                getUsFname().equals(user.getUsFname()) &&
+                getUsLname().equals(user.getUsLname()) &&
+                getUsEmail().equals(user.getUsEmail()) &&
+                getUsUsername().equals(user.getUsUsername()) &&
+                getUsPassword().equals(user.getUsPassword()) &&
+                Objects.equals(getUsConfirmPassword(), user.getUsConfirmPassword()) &&
+                getUsEnabled().equals(user.getUsEnabled()) &&
+                Objects.equals(getCreatedAt(), user.getCreatedAt()) &&
+                Objects.equals(getUpdatedAt(), user.getUpdatedAt()) &&
+                getCreatedBy().equals(user.getCreatedBy()) &&
+                Objects.equals(getUpdatedBy(), user.getUpdatedBy()) &&
+                getShopRoleMap().equals(user.getShopRoleMap());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUuid(), getUsFname(), getUsLname(), getUsEmail(), getUsUsername(), getUsPassword(), getUsConfirmPassword(), getUsEnabled(), getCreatedAt(), getUpdatedAt(), getCreatedBy(), getUpdatedBy(), getShopRoleMap());
+    }
 }
