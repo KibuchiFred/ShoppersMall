@@ -25,15 +25,15 @@ public interface UserRepository  extends JpaRepository<User,Integer> {
 
      //@Query("SELECT m FROM User u join u.shopRoleMap m where u.usEmail= :email")
      //@Query("SELECT key(u.shopRoleMap), value(u.shopRoleMap)  FROM User u join u.shopRoleMap where u.usEmail = :email")
-//     @Query("SELECT key(m), value(m) FROM User u join u.shopRoleMap m" +
+//     @Query("SELECT m FROM User u join u.shopRoleMap m" +
 //             " where u.usEmail = :email")
-//     List<Shop> findByUserEmail(String email);
+//     List<Map<Shop,Role>> findByUserEmail(String email);
 
      //HQL at least gave something sensible
 //     @Query("SELECT new map(key(m), value(m) ) from User u join u.shopRoleMap m where u.usEmail = :email")
 //     List<Map<Shop,Role>> findByUserEmail(String email);
 
-     @Query("SELECT key(m), value(m) FROM User u join u.shopRoleMap m" +
-             " where u.usEmail = :email")
-     List<Object[]> findShopAndRoleByUserEmail(String email);
+//     @Query("SELECT key(m), value(m) FROM User u join u.shopRoleMap m" +
+//             " where u.usEmail = :email")
+//     List<Object[]> findShopAndRoleByUserEmail(String email);
 }
